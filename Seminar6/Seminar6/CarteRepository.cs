@@ -11,7 +11,7 @@ namespace Seminar6
     {
         public List<Carte> GetAll()
         {
-            return FakeDatabase.Carti;
+            return new List<Carte>(FakeDatabase.Carti);
         }
 
         public Carte GetById(Guid id)
@@ -26,14 +26,14 @@ namespace Seminar6
 
         public void Update(Carte carte)
         {
-            var carteDb = FakeDatabase.Carti.SingleOrDefault(c => c.Id == carte.Id);
-            carteDb = carte;
+            int index = FakeDatabase.Carti.FindIndex(x => x.Id == carte.Id);
+            if (index >= 0)
+                FakeDatabase.Carti[index] = carte;
         }
 
         public void Delete(Guid id)
         {
-            var carteDb = FakeDatabase.Carti.SingleOrDefault(c => c.Id == id);
-            FakeDatabase.Carti.Remove(carteDb);
+            FakeDatabase.Carti.RemoveAll(c => c.Id == id);
         }
     }
 }
